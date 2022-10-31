@@ -1,23 +1,47 @@
-import logo from './logo.svg';
 import './App.css';
+import Form from './components/Form';
+import {useState} from 'react';
+import Display from './components/Display';
+import Person from './components/Person';
+
 
 function App() {
+
+  const [ people, setPeople] = useState([
+    {name: "john", color: "red"},
+    {name: "bob", color : "blue"}
+  ]);
+
+  //add to state
+  const addToPeopleState = (name) => {
+    console.log("hello, ", name)
+
+    //add to state
+    const peopleCopy = [...people];
+    peopleCopy.push(name);
+    //change / overwrite state
+    setPeople(peopleCopy);
+
+    //alternate way
+    //setPeople([...people, name])
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+       <h1>forms</h1>
+      state: {JSON.stringify(people)} <br />
+      <Form
+       addToPeopleState = {addToPeopleState}
+       x = {44}
+       people = {people}
+       setPeople = {setPeople}/>
+       <hr />
+       {
+        people.map((person, idx) => {
+          return <Person key={idx} person = {person}/>
+        })
+       }
+       {/* <Display people={people}/> */}
     </div>
   );
 }
